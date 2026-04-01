@@ -9,9 +9,22 @@ def ReadDataFromFile(FilePath):
     print(target_list)
     return target_list
 
-#Galvenā programma
+def AppendDataToFile(FilePath, data):
+    with open(FilePath, "a") as file: #Atveram failu rakstīšanas režīmā, lai pievienotu datus
+        line = ",".join(data)
+        file.write(line + "\n")
 
-Speles, Saciensibas, Komandas, Lietotaji = [], [], [], []
+def DeleteDataToFile(FilePath, index):
+    with open(FilePath, "r") as file:
+        lines = file.readlines()
+
+    if 0 <= index < len(lines):
+        del lines[index]
+
+    with open(FilePath, "w") as file:
+        file.writelines(lines)
+
+#Galvenā programma
 
 Lietotaji = ReadDataFromFile("Lietotaji.csv")
 Speles = ReadDataFromFile("Speles.csv")

@@ -40,6 +40,7 @@ def AppendDataToFile(FilePath, data):
     with open(FilePath, "a") as file: #Atveram failu rakstīšanas režīmā, lai pievienotu datus
         line = ",".join(data)
         file.write(line + "\n")
+        file.write("")
 
 def DeleteDataToFile(FilePath, index):
     with open(FilePath, "r") as file:
@@ -74,12 +75,60 @@ def PrintData(File):
             print("-", end="")
         print("+", end="")
 
+def registration():
+    print("Lūdzu, ievadiet savu e-pasta adresi:")
+    email = input()
+    with open("Lietotaji.csv", "r") as file:
+        for line in file:
+            values = line.strip().split(",")
+            if values[0] == email:
+                print("Šī e-pasta adrese jau ir reģistrēta. Lūdzu, izvēlieties citu e-pasta adresi.")
+                return 
 
+    print("Lūdzu, ievadiet savu parole:")
+    parole = input()
+    print("Lūdzu, ievadiet vai tu esi administrators:")
+    AdministratoraTiesibas = input()
+    print("Lūdzu, ievadiet savu lietotājvārdu:")
+    Username = input()
+
+    user_data = [email, parole, AdministratoraTiesibas, Username, ""]
+    AppendDataToFile("Lietotaji.csv", user_data)
+    print("Reģistrācija veiksmīga!")
+    return AdministratoraTiesibas
+
+def autorization():
+    print("Lūdzu, ievadiet savu e-pasta adresi:")
+    email = input()
+    print("Lūdzu, ievadiet savu parole:")
+    parole = input()
+
+    with open("Lietotaji.csv", "r") as file:
+        for line in file:
+            values = line.strip().split(",")
+            if values[0] == email and values[1] == parole:
+                print("Autorizācija veiksmīga!")
+                return values[2]
+    print("Neizdevās autorizēties. Lūdzu, pārbaudiet savu e-pasta adresi un paroli.")
+    return False
 #Galvenā programma
 
 Lietotaji = ReadDataFromFile("Lietotaji.csv")
 Speles = ReadDataFromFile("Speles.csv")
 Saciensibas = ReadDataFromFile("Saciensibas.csv")
 Komandas, mvpBalles = ReadDataFromFile("Komandas.csv")
+adminTies = False
+exit = False
 
-PrintData(Komandas)
+print("Sveicināti! Lūdzu, izvēlieties darbību:")
+print("1. Reģistrācija")
+print("2. Autorizācija")
+
+while input != "1" and input != "2":
+    inp = input()
+    if inp == "1":
+        adminTies = registration()
+    elif inp == "2":    
+        adminTies = autorization()
+
+while exit == False:

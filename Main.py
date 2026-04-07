@@ -12,13 +12,13 @@ def ReadDataFromFile(filePath):
 
     else:
         teams_players = [["Komandas nosaukums", "Spēlētājs 1", "Spēlētājs 2", "Spēlētājs 3", "Spēlētājs 4", "Spēlētājs 5"]]
-        all_numbers = [["Komandas nosaukums", "MVPBalles1Spēlētāja", "MVPBalles2Spēlētāja", "MVPBalles3Spēlētāja", "MVPBalles4Spēlētāja", "MVPBalles5Spēlētāja"]]
+        all_numbers = [["Komandas nosaukums", "MVPBalles1Spēlētāja", "MVPBalles2Spēlētāja", "MVPBalles3Spēlētāja", "MVPBalles4Spēlētāja", "MVPBalles5Spēlētāja"]]  
 
         with open(filePath, "r") as file:
             next(file)
 
             for line in file:
-                values = [v.strip() for v in line.split(",")]
+                values = [v.strip() for v in line.split(",")]         #funkcija ReadDataFromFile pieņem Filepath tipa vērtību FilePath atgriež divdimensijas masivu tipa vērtību target_list
 
                 komandas = [values[0]]
                 for i in range(1, len(values), 2):
@@ -37,13 +37,13 @@ def ReadDataFromFile(filePath):
         return teams_players, all_numbers
 
 def AppendDataToFile(FilePath, data):
-    with open(FilePath, "a") as file: #Atveram failu rakstīšanas režīmā, lai pievienotu datus
+    with open(FilePath, "a") as file:        #funkcija AppendDataToFile pieņem Filepath, list tipa vērtību FilePath, data atgriež neko
         line = ",".join(data)
         file.write(line + "\n")
         file.write("")
 
 def ChangeDataToFile(FilePath, ChangeIndex, new_data):
-    DeleteDataToFile(FilePath, ChangeIndex)
+    DeleteDataToFile(FilePath, ChangeIndex)           #funkcija ChangeDataToFile pieņem Filepath, int tipa vērtību FilePath, index, list tipa vērtību new_data, atgriež neko
 
     AppendDataToFile(FilePath, new_data)
 
@@ -51,7 +51,7 @@ def DeleteDataToFile(FilePath, index):
     with open(FilePath, "r") as file:
         lines = file.readlines()
 
-    if 0 <= index < len(lines):
+    if 0 <= index < len(lines):                 # funkcija DeleteDataToFile pieņem Filepath, int tipa vērtību FilePath, index atgriež neko
         del lines[index]
 
     with open(FilePath, "w") as file:
@@ -72,7 +72,7 @@ def PrintData(File):
             print("| ", end="")
             for i in range((30 - len(item)) // 2):
                 print(" ", end="")
-            print(item, end="")                             #Izdrukājam datu elementu, centrējot to 40 rakstzīmju platumā
+            print(item, end="")                             #funkcija PrintData pieņem divdimensijas masīvu tipa vērtību File atgriež neko, izdrukā masīva elementus tabulas formātā
             for i in range((31 - len(item)) // 2):
                 print(" ", end="")
             print(" |", end="")
@@ -96,8 +96,8 @@ def registration():
                 return 
 
     print("Lūdzu, ievadiet savu parole:")
-    parole = input()
-    print("Lūdzu, ievadiet vai tu esi administrators:")
+    parole = input()   
+    print("Lūdzu, ievadiet vai tu esi administrators:")                                          #funkcija registration pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
     AdministratoraTiesibas = input()
     print("Lūdzu, ievadiet savu lietotājvārdu:")
     Username = input()
@@ -110,7 +110,7 @@ def registration():
 def autorization():
     print("Lūdzu, ievadiet savu e-pasta adresi:")
     email = input()
-    print("Lūdzu, ievadiet savu parole:")
+    print("Lūdzu, ievadiet savu parole:")                #funkcija autorization pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
     parole = input()
 
     with open("Lietotaji.csv", "r") as file:

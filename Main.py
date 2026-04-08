@@ -93,27 +93,34 @@ def registration():
         for line in file:
             values = line.strip().split(",")
             if values[0] == email:
+                print("")
                 print("Šī e-pasta adrese jau ir reģistrēta. Lūdzu, izvēlieties citu e-pasta adresi.")
                 return 
-
+            
+    print("")
     print("Lūdzu, ievadiet savu parole:")
+    print("")
     parole = input()   
     print("Lūdzu, ievadiet vai tu esi administrators(Ja/Ne):")                                          #funkcija registration pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
     if input() == "Ja":
         AdministratoraTiesibas = True
     else:         
         AdministratoraTiesibas = False
+    print("")
     print("Lūdzu, ievadiet savu lietotājvārdu:")
     Username = input()
 
-    user_data = [email, parole, AdministratoraTiesibas, Username, ""]
+    user_data = [str(email), str(parole), str(AdministratoraTiesibas), str(Username), ""]
     AppendDataToFile("Lietotaji.csv", user_data)
+    print("")
     print("Reģistrācija veiksmīga!")
     return AdministratoraTiesibas
 
 def autorization():
+    print("")
     print("Lūdzu, ievadiet savu e-pasta adresi:")
     email = input()
+    print("")
     print("Lūdzu, ievadiet savu parole:")                #funkcija autorization pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
     parole = input()
 
@@ -151,9 +158,11 @@ while inp != "1" and inp != "2":
     elif inp == "2":    
         adminTies, lietotajaIndex = autorization()
 
+Lietotaji = ReadDataFromFile("Lietotaji.csv")
 Lietotajs = [Lietotaji[0], Lietotaji[lietotajaIndex]]
 
 while exit == False:
+    print("")
     print("Lūdzu, izvēlieties darbību:")
     print("1. Izdrukāt komandas un MVP balles")
     print("2. Izdrukāt spēles")
@@ -168,6 +177,7 @@ while exit == False:
         print("10. Pievienot jaunu sacensību")
         print("11. Dzēst sacensību")
     print("exit. Iziet")
+    print("")
 
     inp = input()
     if inp == "1":
@@ -208,20 +218,25 @@ while exit == False:
     elif inp == "6":    
         if adminTies == True:
             i = 1
+            print("")
             mas = [input("Ievadiet komandas vārdu: ")]
 
             while i <= 5:
+                print("")
                 mas[i] = input("Ievadiet spēlētāja vārdu: ")
+                print("")
                 mas[i + 1] = input("Ievadiet viņas MVP balles: ")
                 i += 2
 
             AppendDataToFile("Komandas.csv", mas)
             pass
         else:
+            print("")
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
 
     elif inp == "7":    
         if adminTies == True:
+            print("")
             num = int(input("Ievadiet dzēšamās komandas rindu numuru: "))
             DeleteDataToFile("Komandas.csv", num)
             pass
@@ -230,6 +245,7 @@ while exit == False:
 
     elif inp == "8":    
         if adminTies == True:
+            print("")
             mas = [input("Ievadiet spēles nosaukumu: "), input("Ievadiet spēles datumu: "), input("Ievadiet spēles rezultatu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: ")]
             AppendDataToFile("Speles.csv", mas)
             pass
@@ -238,6 +254,7 @@ while exit == False:
 
     elif inp == "9":    
         if adminTies == True:
+                print("")
                 num = int(input("Ievadiet dzēšamās spēles rindu numuru: "))
                 DeleteDataToFile("Speles.csv", num)
                 pass
@@ -246,6 +263,7 @@ while exit == False:
 
     elif inp == "10":
         if adminTies == True:
+            print("")
             mas = [input("Ievadiet sacensības nosaukumu: "), input("Ievadiet sacensības datumu: "), input("Ievadiet sacensības rezultātu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: ")]
             AppendDataToFile("Saciensibas.csv", mas)
             pass
@@ -254,6 +272,7 @@ while exit == False:
 
     elif inp == "11":
         if adminTies == True:
+            print("")
             num = int(input("Ievadiet dzēšamās sacensības rindu numuru: "))
             DeleteDataToFile("Saciensibas.csv", num)
             pass
@@ -261,6 +280,7 @@ while exit == False:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
 
     elif inp == "exit":
+        print("")
         print("Paldies, Uz redzēšanos!")
         exit = True
     else:

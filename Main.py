@@ -11,8 +11,8 @@ def ReadDataFromFile(filePath):
         return target_list
 
     else:
-        teams_players = [["Komandas nosaukums", "Spēlētājs 1", "Spēlētājs 2", "Spēlētājs 3", "Spēlētājs 4", "Spēlētājs 5"]]
-        all_numbers = [["Komandas nosaukums", "MVPBalles1Spēlētāja", "MVPBalles2Spēlētāja", "MVPBalles3Spēlētāja", "MVPBalles4Spēlētāja", "MVPBalles5Spēlētāja"]]  
+        teams_players = [["Komandas nosaukums", "Spēlētājs 1", "Spēlētājs 2", "Spēlētājs 3", "Spēlētājs 4", "Spēlētājs 5", "Vislabākais spēlētājs"]]
+        all_numbers = [["Komandas nosaukums", "MVPBalles1Spēlētāja", "MVPBalles2Spēlētāja", "MVPBalles3Spēlētāja", "MVPBalles4Spēlētāja", "MVPBalles5Spēlētāja", "VislabakajaSpeletajaPunkti"]]
 
         with open(filePath, "r") as file:
             next(file)
@@ -23,6 +23,7 @@ def ReadDataFromFile(filePath):
                 komandas = [values[0]]
                 for i in range(1, len(values), 2):
                     komandas.append(values[i])
+                komandas.append("")
 
                 MVP_points = [values[0]]
                 for i in range(2, len(values), 2):
@@ -30,10 +31,10 @@ def ReadDataFromFile(filePath):
                         MVP_points.append(int(values[i]))
                     except:
                         pass
+                MVP_points.append("")
 
                 teams_players.append(komandas)
                 all_numbers.append(MVP_points)
-
         return teams_players, all_numbers
 
 def AppendDataToFile(FilePath, data):
@@ -97,8 +98,11 @@ def registration():
 
     print("Lūdzu, ievadiet savu parole:")
     parole = input()   
-    print("Lūdzu, ievadiet vai tu esi administrators:")                                          #funkcija registration pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
-    AdministratoraTiesibas = input()
+    print("Lūdzu, ievadiet vai tu esi administrators(Ja/Ne):")                                          #funkcija registration pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
+    if input() == "Ja":
+        AdministratoraTiesibas = True
+    else:         
+        AdministratoraTiesibas = False
     print("Lūdzu, ievadiet savu lietotājvārdu:")
     Username = input()
 
@@ -151,22 +155,58 @@ Lietotajs = [Lietotaji[0], Lietotaji[lietotajaIndex]]
 
 while exit == False:
     print("Lūdzu, izvēlieties darbību:")
-    print("1. Pievienot komandu")
-    print("2. Dzēst komandu")
-    print("3. Pievienot jaunu spēli")
-    print("4. Dzēst spēli")
-    print("5. Pievienot jaunu sacensību")
-    print("6. Dzēst sacensību")
-    print("7. Izdrukāt komandas un MVP balles")
-    print("8. Izdrukāt spēles")
-    print("9. Izdrukāt sacensības")
-    print("10. Saglabāt spēles tiešraidi")
-    print("11. Izdrukāt lietotāja informāciju")
+    print("1. Izdrukāt komandas un MVP balles")
+    print("2. Izdrukāt spēles")
+    print("3. Izdrukāt sacensības")
+    print("4. Saglabāt spēles tiešraidi")
+    print("5. Izdrukāt lietotāja informāciju")
+    if adminTies == "True":
+        print("6. Pievienot komandu")
+        print("7. Dzēst komandu")
+        print("8. Pievienot jaunu spēli")
+        print("9. Dzēst spēli")
+        print("10. Pievienot jaunu sacensību")
+        print("11. Dzēst sacensību")
     print("exit. Iziet")
 
     inp = input()
     if inp == "1":
-        if adminTies == "Jā":
+        for i in range(1, len(mvpBalles)):
+            bestPlayer = ""
+            bestPlayerPoints = -1
+            for j in range(1, len(mvpBalles[i])):
+                try:
+                    value = int(mvpBalles[i][j])
+                    if value > bestPlayerPoints:
+                        bestPlayerPoints = value
+                        bestPlayer = Komandas[i][j]
+                except:
+                    continue
+            mvpBalles[i][len(mvpBalles[i]) - 1] = bestPlayerPoints
+            Komandas[i][len(Komandas[i]) - 1] = bestPlayer
+        PrintData(Komandas)
+        PrintData(mvpBalles)
+
+    elif inp == "2":    
+        PrintData(Speles)
+
+    elif inp == "3":    
+        PrintData(Saciensibas)
+
+    elif inp == "4":    
+        safeInfo = input("Ievadiet speles indeksu, kuru tiešraide vēlaties saglabāt: ")
+        Lietotaji[lietotajaIndex][len(Lietotaji[lietotajaIndex]) - 1] = Speles[int(safeInfo) - 1][5]
+        ChangeDataToFile("Lietotaji.csv", lietotajaIndex, Lietotaji[lietotajaIndex])
+        Lietotaji = ReadDataFromFile("Lietotaji.csv")
+        lietotajaIndex = len(Lietotaji) - 1
+        Lietotajs[1] = Lietotaji[lietotajaIndex]
+        PrintData(Lietotajs)
+
+    elif inp == "5":    
+        PrintData(Lietotajs)
+
+    elif inp == "6":    
+        if adminTies == True:
             i = 1
             mas = [input("Ievadiet komandas vārdu: ")]
 
@@ -180,67 +220,45 @@ while exit == False:
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
 
-    elif inp == "2":    
-        if adminTies == "Jā":
+    elif inp == "7":    
+        if adminTies == True:
             num = int(input("Ievadiet dzēšamās komandas rindu numuru: "))
             DeleteDataToFile("Komandas.csv", num)
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
 
-    elif inp == "3":    
-        if adminTies == "Jā":
+    elif inp == "8":    
+        if adminTies == True:
             mas = [input("Ievadiet spēles nosaukumu: "), input("Ievadiet spēles datumu: "), input("Ievadiet spēles rezultatu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: ")]
             AppendDataToFile("Speles.csv", mas)
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
 
-    elif inp == "4":    
-        if adminTies == "Jā":
+    elif inp == "9":    
+        if adminTies == True:
                 num = int(input("Ievadiet dzēšamās spēles rindu numuru: "))
                 DeleteDataToFile("Speles.csv", num)
                 pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
 
-    elif inp == "5":    
-        if adminTies == "Jā":
+    elif inp == "10":
+        if adminTies == True:
             mas = [input("Ievadiet sacensības nosaukumu: "), input("Ievadiet sacensības datumu: "), input("Ievadiet sacensības rezultātu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: ")]
             AppendDataToFile("Saciensibas.csv", mas)
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
 
-    elif inp == "6":    
-        if adminTies == "Jā":
+    elif inp == "11":
+        if adminTies == True:
             num = int(input("Ievadiet dzēšamās sacensības rindu numuru: "))
             DeleteDataToFile("Saciensibas.csv", num)
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
-
-    elif inp == "7":    
-        PrintData(Komandas)
-        PrintData(mvpBalles)
-
-    elif inp == "8":    
-        PrintData(Speles)
-
-    elif inp == "9":    
-        PrintData(Saciensibas)
-
-    elif inp == "10":
-        safeInfo = input("Ievadiet speles indeksu, kuru tiešraide vēlaties saglabāt: ")
-        Lietotaji[lietotajaIndex][len(Lietotaji[lietotajaIndex]) - 1] = Speles[int(safeInfo) - 1][5]
-        ChangeDataToFile("Lietotaji.csv", lietotajaIndex, Lietotaji[lietotajaIndex])
-        Lietotaji = ReadDataFromFile("Lietotaji.csv")
-        lietotajaIndex = len(Lietotaji) - 1
-        Lietotajs[1] = Lietotaji[lietotajaIndex]
-        PrintData(Lietotajs)
-
-    elif inp == "11":
-        PrintData(Lietotajs)
 
     elif inp == "exit":
         print("Paldies, Uz redzēšanos!")

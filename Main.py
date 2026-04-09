@@ -89,6 +89,10 @@ def PrintData(File):
 def registration():
     print("Lūdzu, ievadiet savu e-pasta adresi:")
     email = input()
+    while len(email) < 5 or "@" not in email:
+        print("Nederīga e-pasta adrese. Lūdzu, ievadiet derīgu e-pasta adresi:")
+        email = input()
+
     with open("Lietotaji.csv", "r") as file:
         for line in file:
             values = line.strip().split(",")
@@ -100,15 +104,25 @@ def registration():
     print("")
     print("Lūdzu, ievadiet savu parole:")
     print("")
-    parole = input()   
+    parole = input()
+    while len(parole) < 5:
+        print("Nederīga parole. Lūdzu, ievadiet derīgu parole:")
+        parole = input()   
     print("Lūdzu, ievadiet vai tu esi administrators(Ja/Ne):")                                          #funkcija registration pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
-    if input() == "Ja":
+    adminTies = input()
+    while adminTies != "Ja" and adminTies != "Ne":
+        print("Lūdzu, ievadiet 'Ja' vai 'Ne':")
+        adminTies = input()
+    if adminTies == "Ja":
         AdministratoraTiesibas = True
     else:         
         AdministratoraTiesibas = False
     print("")
     print("Lūdzu, ievadiet savu lietotājvārdu:")
     Username = input()
+    while len(Username) < 5:
+        print("Nederīgs lietotājvārds. Lūdzu, ievadiet derīgu lietotājvārdu:")
+        Username = input()
 
     user_data = [str(email), str(parole), str(AdministratoraTiesibas), str(Username), ""]
     AppendDataToFile("Lietotaji.csv", user_data)

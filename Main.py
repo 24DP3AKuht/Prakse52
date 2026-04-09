@@ -266,13 +266,19 @@ while exit == False:
         if adminTies == "True":
             i = 1
             print("")
-            mas = [input("Ievadiet komandas vārdu: ")]
 
-            while i <= 5:
+            mas = [""] * 11
+            mas[0] = input("Ievadiet komandas vārdu: ")
+
+            while i <= 10:
                 print("")
                 mas[i] = input("Ievadiet spēlētāja vārdu: ")
                 print("")
-                mas[i + 1] = input("Ievadiet viņas MVP balles: ")
+                num = input("Ievadiet viņas MVP balles: ")
+                while not num.isdigit():
+                    print("Nederīga ievade. Lūdzu, ievadiet skaitli.")
+                    num = input("Ievadiet viņas MVP balles: ")
+                mas[i + 1] = num
                 i += 2
 
             AppendDataToFile("Komandas.csv", mas)
@@ -307,7 +313,7 @@ while exit == False:
     elif inp == "8":    
         if adminTies == "True":
             print("")
-            mas = [input("Ievadiet spēles nosaukumu: "), input("Ievadiet spēles datumu: "), input("Ievadiet spēles rezultatu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: ")]
+            mas = [input("Ievadiet spēles nosaukumu: "), input("Ievadiet spēles datumu: "), input("Ievadiet spēles rezultatu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: "), input("Ievadiet tiešraides saiti: ")]
             AppendDataToFile("Speles.csv", mas)
             pass
         else:

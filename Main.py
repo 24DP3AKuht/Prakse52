@@ -160,9 +160,16 @@ adminTies = False
 exit = False
 lietotajaIndex = 0
 
-print("Sveicināti! Lūdzu, izvēlieties darbību:")
-print("1. Reģistrācija")
-print("2. Autorizācija")
+print("")
+print("╔══════════════════════════════════════╗")
+print("║         Sveicināti sistēmā!          ║")
+print("╠══════════════════════════════════════╣")
+print("║  Lūdzu, izvēlieties darbību:         ║")
+print("╠══════════════════════════════════════╣")
+print("║   [1] Reģistrācija                   ║")
+print("║   [2] Autorizācija                   ║")
+print("╚══════════════════════════════════════╝")
+print("")
 
 inp = ""
 while inp != "1" and inp != "2":
@@ -180,20 +187,29 @@ BestPlayerCounting()
 
 while exit == False:
     print("")
-    print("Lūdzu, izvēlieties darbību:")
-    print("1. Izdrukāt komandas un MVP balles")
-    print("2. Izdrukāt spēles")
-    print("3. Izdrukāt sacensības")
-    print("4. Saglabāt spēles tiešraidi")
-    print("5. Izdrukāt lietotāja informāciju")
+    print("╔══════════════════════════════════════════════╗")
+    print("║            Galvenā izvēlne                   ║")
+    print("╠══════════════════════════════════════════════╣")
+    print("║  [1] Izdrukāt komandas un MVP balles         ║")
+    print("║  [2] Izdrukāt spēles                         ║")
+    print("║  [3] Izdrukāt sacensības                     ║")
+    print("║  [4] Saglabāt spēles tiešraidi               ║")
+    print("║  [5] Izdrukāt lietotāja informāciju          ║")
+
     if adminTies == "True":
-        print("6. Pievienot komandu")
-        print("7. Dzēst komandu")
-        print("8. Pievienot jaunu spēli")
-        print("9. Dzēst spēli")
-        print("10. Pievienot jaunu sacensību")
-        print("11. Dzēst sacensību")
-    print("exit. Iziet")
+        print("╠══════════════════════════════════════════════╣")
+        print("║              Admin opcijas                   ║")
+        print("╠══════════════════════════════════════════════╣")
+        print("║  [6] Pievienot komandu                       ║")
+        print("║  [7] Dzēst komandu                           ║")
+        print("║  [8] Pievienot jaunu spēli                   ║")
+        print("║  [9] Dzēst spēli                             ║")
+        print("║ [10] Pievienot jaunu sacensību               ║")
+        print("║ [11] Dzēst sacensību                         ║")
+
+    print("╠══════════════════════════════════════════════╣")
+    print("║  [exit] Iziet                                ║")
+    print("╚══════════════════════════════════════════════╝")
     print("")
 
     inp = input()

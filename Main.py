@@ -135,6 +135,21 @@ def autorization():
     print("Neizdevās autorizēties. Lūdzu, pārbaudiet savu e-pasta adresi un paroli.")
     return False
 
+def BestPlayerCounting():
+    for i in range(1, len(mvpBalles)):
+        bestPlayer = ""
+        bestPlayerPoints = -1
+        for j in range(1, len(mvpBalles[i])):                #funkcija BestPlayerCounting pieņem neko un atgriež neko, izskaita katras komandas spēlētāju MVP balles un atrod katras komandas vislabāko spēlētāju un viņa punktus
+            try:
+                value = int(mvpBalles[i][j])
+                if value > bestPlayerPoints:
+                    bestPlayerPoints = value
+                    bestPlayer = Komandas[i][j]
+            except:
+                continue
+        mvpBalles[i][len(mvpBalles[i]) - 1] = bestPlayerPoints
+        Komandas[i][len(Komandas[i]) - 1] = bestPlayer
+
 #Galvenā programma
 
 Lietotaji = ReadDataFromFile("Lietotaji.csv")
@@ -160,6 +175,8 @@ while inp != "1" and inp != "2":
 
 Lietotaji = ReadDataFromFile("Lietotaji.csv")
 Lietotajs = [Lietotaji[0], Lietotaji[lietotajaIndex]]
+
+BestPlayerCounting()
 
 while exit == False:
     print("")
@@ -216,7 +233,7 @@ while exit == False:
         PrintData(Lietotajs)
 
     elif inp == "6":    
-        if adminTies == True:
+        if adminTies == "True":
             i = 1
             print("")
             mas = [input("Ievadiet komandas vārdu: ")]
@@ -233,51 +250,85 @@ while exit == False:
         else:
             print("")
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
+        Komandas, mvpBalles = ReadDataFromFile("Komandas.csv")
+        BestPlayerCounting()
 
     elif inp == "7":    
-        if adminTies == True:
+        if adminTies == "True":
             print("")
             num = int(input("Ievadiet dzēšamās komandas rindu numuru: "))
-            DeleteDataToFile("Komandas.csv", num)
+            vienaKomanda = [Komandas[0], Komandas[num]]
+            vienaKomandaBalles = [mvpBalles[0], mvpBalles[num]]
+            PrintData(vienaKomanda)
+            PrintData(vienaKomandaBalles)
+            if input("Vai tiešām vēlaties dzēst šo komandu? (J/N): ") == "J":
+                DeleteDataToFile("Komandas.csv", num)
+                print("")
+                print("Komanda veiksmīgi dzēsta.")
+            else:
+                print("")
+                print("Komanda netika dzēsta.")
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
+        Komandas, mvpBalles = ReadDataFromFile("Komandas.csv")
+        BestPlayerCounting()
 
     elif inp == "8":    
-        if adminTies == True:
+        if adminTies == "True":
             print("")
             mas = [input("Ievadiet spēles nosaukumu: "), input("Ievadiet spēles datumu: "), input("Ievadiet spēles rezultatu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: ")]
             AppendDataToFile("Speles.csv", mas)
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
+        Speles = ReadDataFromFile("Speles.csv")
 
     elif inp == "9":    
-        if adminTies == True:
-                print("")
-                num = int(input("Ievadiet dzēšamās spēles rindu numuru: "))
+        if adminTies == "True":
+            print("")
+            num = int(input("Ievadiet dzēšamās spēles rindu numuru: "))
+            vienaSpele = [Speles[0], Speles[num]]
+            PrintData(vienaSpele)
+            if input("Vai tiešām vēlaties dzēst šo spēli? (J/N): ") == "J":
                 DeleteDataToFile("Speles.csv", num)
-                pass
+                print("")
+                print("Spēle veiksmīgi dzēsta.")
+            else:
+                print("")
+                print("Spēle netika dzēsta.")
+            pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
+        Speles = ReadDataFromFile("Speles.csv")
 
     elif inp == "10":
-        if adminTies == True:
+        if adminTies == "True":
             print("")
             mas = [input("Ievadiet sacensības nosaukumu: "), input("Ievadiet sacensības datumu: "), input("Ievadiet sacensības rezultātu: "), input("Ievadiet pirmo komandu: "), input("Ievadiet otro komandu: ")]
             AppendDataToFile("Saciensibas.csv", mas)
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
+        Saciensibas = ReadDataFromFile("Saciensibas.csv")
 
     elif inp == "11":
-        if adminTies == True:
+        if adminTies == "True":
             print("")
             num = int(input("Ievadiet dzēšamās sacensības rindu numuru: "))
-            DeleteDataToFile("Saciensibas.csv", num)
+            vienaSaciensiba = [Saciensibas[0], Saciensibas[num]]
+            PrintData(vienaSaciensiba)
+            if input("Vai tiešām vēlaties dzēst šo sacensību? (J/N): ") == "J":
+                DeleteDataToFile("Saciensibas.csv", num)
+                print("")
+                print("Sacensība veiksmīgi dzēsta.")
+            else:
+                print("")
+                print("Sacensība netika dzēsta.")
             pass
         else:
             print("Jums nav administratora tiesību, lai veiktu šo darbību.")
+        Saciensibas = ReadDataFromFile("Saciensibas.csv")
 
     elif inp == "exit":
         print("")

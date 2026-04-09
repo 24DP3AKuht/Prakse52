@@ -106,3 +106,18 @@ inp = input()
         exit = True
     else:
         print("Nederīga izvēle. Lūdzu, izvēlieties darbību no 1 līdz 10.")
+
+
+        for i in range(1, len(mvpBalles)):
+            bestPlayer = ""
+            bestPlayerPoints = -1
+            for j in range(1, len(mvpBalles[i])):
+                try:
+                    value = int(mvpBalles[i][j])
+                    if value > bestPlayerPoints:
+                        bestPlayerPoints = value
+                        bestPlayer = Komandas[i][j]
+                except:
+                    continue
+            mvpBalles[i][len(mvpBalles[i]) - 1] = bestPlayerPoints
+            Komandas[i][len(Komandas[i]) - 1] = bestPlayer

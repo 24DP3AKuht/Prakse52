@@ -89,6 +89,10 @@ def PrintData(File):
 def registration():
     print("Lūdzu, ievadiet savu e-pasta adresi:")
     email = input()
+    while len(email) < 5 or "@" not in email:
+        print("Nederīga e-pasta adrese. Lūdzu, ievadiet derīgu e-pasta adresi:")
+        email = input()
+
     with open("Lietotaji.csv", "r") as file:
         for line in file:
             values = line.strip().split(",")
@@ -100,15 +104,25 @@ def registration():
     print("")
     print("Lūdzu, ievadiet savu parole:")
     print("")
-    parole = input()   
+    parole = input()
+    while len(parole) < 5:
+        print("Nederīga parole. Lūdzu, ievadiet derīgu parole:")
+        parole = input()   
     print("Lūdzu, ievadiet vai tu esi administrators(Ja/Ne):")                                          #funkcija registration pieņem neko un atgriež boolean tipa vērtību AdministratoraTiesibas
-    if input() == "Ja":
+    adminTies = input()
+    while adminTies != "Ja" and adminTies != "Ne":
+        print("Lūdzu, ievadiet 'Ja' vai 'Ne':")
+        adminTies = input()
+    if adminTies == "Ja":
         AdministratoraTiesibas = True
     else:         
         AdministratoraTiesibas = False
     print("")
     print("Lūdzu, ievadiet savu lietotājvārdu:")
     Username = input()
+    while len(Username) < 5:
+        print("Nederīgs lietotājvārds. Lūdzu, ievadiet derīgu lietotājvārdu:")
+        Username = input()
 
     user_data = [str(email), str(parole), str(AdministratoraTiesibas), str(Username), ""]
     AppendDataToFile("Lietotaji.csv", user_data)
@@ -160,9 +174,16 @@ adminTies = False
 exit = False
 lietotajaIndex = 0
 
-print("Sveicināti! Lūdzu, izvēlieties darbību:")
-print("1. Reģistrācija")
-print("2. Autorizācija")
+print("")
+print("╔══════════════════════════════════════╗")
+print("║         Sveicināti sistēmā!          ║")
+print("╠══════════════════════════════════════╣")
+print("║  Lūdzu, izvēlieties darbību:         ║")
+print("╠══════════════════════════════════════╣")
+print("║   [1] Reģistrācija                   ║")
+print("║   [2] Autorizācija                   ║")
+print("╚══════════════════════════════════════╝")
+print("")
 
 inp = ""
 while inp != "1" and inp != "2":
@@ -180,20 +201,29 @@ BestPlayerCounting()
 
 while exit == False:
     print("")
-    print("Lūdzu, izvēlieties darbību:")
-    print("1. Izdrukāt komandas un MVP balles")
-    print("2. Izdrukāt spēles")
-    print("3. Izdrukāt sacensības")
-    print("4. Saglabāt spēles tiešraidi")
-    print("5. Izdrukāt lietotāja informāciju")
+    print("╔══════════════════════════════════════════════╗")
+    print("║            Galvenā izvēlne                   ║")
+    print("╠══════════════════════════════════════════════╣")
+    print("║  [1] Izdrukāt komandas un MVP balles         ║")
+    print("║  [2] Izdrukāt spēles                         ║")
+    print("║  [3] Izdrukāt sacensības                     ║")
+    print("║  [4] Saglabāt spēles tiešraidi               ║")
+    print("║  [5] Izdrukāt lietotāja informāciju          ║")
+
     if adminTies == "True":
-        print("6. Pievienot komandu")
-        print("7. Dzēst komandu")
-        print("8. Pievienot jaunu spēli")
-        print("9. Dzēst spēli")
-        print("10. Pievienot jaunu sacensību")
-        print("11. Dzēst sacensību")
-    print("exit. Iziet")
+        print("╠══════════════════════════════════════════════╣")
+        print("║              Admin opcijas                   ║")
+        print("╠══════════════════════════════════════════════╣")
+        print("║  [6] Pievienot komandu                       ║")
+        print("║  [7] Dzēst komandu                           ║")
+        print("║  [8] Pievienot jaunu spēli                   ║")
+        print("║  [9] Dzēst spēli                             ║")
+        print("║ [10] Pievienot jaunu sacensību               ║")
+        print("║ [11] Dzēst sacensību                         ║")
+
+    print("╠══════════════════════════════════════════════╣")
+    print("║  [exit] Iziet                                ║")
+    print("╚══════════════════════════════════════════════╝")
     print("")
 
     inp = input()

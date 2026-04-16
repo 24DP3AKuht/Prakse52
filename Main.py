@@ -61,7 +61,7 @@ def DeleteDataToFile(FilePath, index):
 def PrintData(File):
     for i in range(len(File[0])):
         print("+", end="")
-        for i in range(32):
+        for i in range(28):
             print("-", end="")
         print("+", end="")
     print("")
@@ -71,17 +71,17 @@ def PrintData(File):
             if type(item) == int:
                 item = str(item)
             print("| ", end="")
-            for i in range((30 - len(item)) // 2):
+            for i in range((26 - len(item)) // 2):
                 print(" ", end="")
             print(item, end="")                             #funkcija PrintData pieņem divdimensijas masīvu tipa vērtību File atgriež neko, izdrukā masīva elementus tabulas formātā
-            for i in range((31 - len(item)) // 2):
+            for i in range((27 - len(item)) // 2):
                 print(" ", end="")
             print(" |", end="")
         print("")
 
     for i in range(len(File[0])):
         print("+", end="")
-        for i in range(32):
+        for i in range(28):
             print("-", end="")
         print("+", end="")
     print("")
